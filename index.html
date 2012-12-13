@@ -5,6 +5,7 @@
 <script type="text/javascript" src="src/Panel.js"></script>
 <script type="text/javascript" src="src/Piece.js"></script>
 <script type="text/javascript" src="src/Board.js"></script>
+<script type="text/javascript" src="src/Bot.js"></script>
 </head>
 <body onkeydown="keypressed(event)">
 <h1>Tetris</h1>
@@ -24,6 +25,9 @@
 	<canvas id="side_panel4" class="side_panel" width=85 height=85></canvas>
 	</div>
 	<canvas id="main_panel" width=300 height=550></canvas>
+	<br/><br/>
+	<button id="playbtn" onclick=playbtn()>PLAY</button>
+	<button id="botbtn" onclick=botbtn()>RUN BOT</button>
 </div>
 </body>
 </html>

@@ -1,9 +1,19 @@
-function Board() {
+function Board(_cells) {
 	this.cells = new Array(ROWS);
-	for (var r = 0; r < ROWS; r++) {
-		this.cells[r] = new Array(COLS);
-		for (var c = 0; c < COLS; c++) {
-			this.cells[r][c] = 0;
+	
+	if (_cells) {
+		for (var r = 0; r < ROWS; r++) {
+			this.cells[r] = new Array(COLS);
+			for (var c = 0; c < COLS; c++) {
+				this.cells[r][c] = _cells[r][c];
+			}
+		}
+	} else {
+		for (var r = 0; r < ROWS; r++) {
+			this.cells[r] = new Array(COLS);
+			for (var c = 0; c < COLS; c++) {
+				this.cells[r][c] = 0;
+			}
 		}
 	}
 	
@@ -30,7 +40,9 @@ function Board() {
 		for (var r = 0; r < 4; r++) {
 			for (var c = 0; c < 4; c++) {
 				if (p.struct[p.orient][r][c]) {
-					this.cells[r + p.row][c + p.col] = p.index+1;
+					if (r + p.row >= 0) {
+						this.cells[r + p.row][c + p.col] = p.index+1;
+					}
 				}
 			}
 		}
@@ -86,5 +98,17 @@ function Board() {
 		}
 		
 		this.scored_prev = (cleared_rows > 0);
-	}
+	};
+	
+	this.clear = function() {
+		for (var r = 0; r < ROWS; r++) {
+			for (var c = 0; c < COLS; c++) {
+				this.cells[r][c] = 0;
+			}
+		}
+	};
+	
+	this.clone = function() {
+		return new Board(this.cells);
+	};
 }

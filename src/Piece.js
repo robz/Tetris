@@ -94,13 +94,19 @@ function Piece(index) {
 		}
 	
 		return false;
-	}
+	};
 	
 	this.move = function(dr, dc, da) {
 		this.row = dr + this.row;
 		this.col = dc + this.col;
 		this.orient = (this.orient + da)%this.num_orients;
-	}
+	};
+	
+	this.reset = function() {
+		this.row = -1; 
+		this.col = 3;
+		this.orient = 0;
+	};
 }
 
 var colors = [
