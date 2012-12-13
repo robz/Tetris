@@ -1,0 +1,29 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css"/>	
+<script type="text/javascript" src="src/main.js"></script>
+<script type="text/javascript" src="src/Panel.js"></script>
+<script type="text/javascript" src="src/Piece.js"></script>
+<script type="text/javascript" src="src/Board.js"></script>
+</head>
+<body onkeydown="keypressed(event)">
+<h1>Tetris</h1>
+<div id="container">
+	<div id="right_panel"/>
+	<div id="game_info">
+	<strong>
+	SCORE: <span id="score">0</span><br/>
+	LINES: <span id="lines">0</span>
+	</strong>
+	</div>
+	<br/>
+	<canvas id="side_panel0" class="side_panel" width=130 height=130></canvas><br/>
+	<canvas id="side_panel1" class="side_panel" width=85 height=85></canvas><br/>
+	<canvas id="side_panel2" class="side_panel" width=85 height=85></canvas><br/>
+	<canvas id="side_panel3" class="side_panel" width=85 height=85></canvas><br/>
+	<canvas id="side_panel4" class="side_panel" width=85 height=85></canvas>
+	</div>
+	<canvas id="main_panel" width=300 height=550></canvas>
+</div>
+</body>
+</html>

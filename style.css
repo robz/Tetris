@@ -1,0 +1,23 @@
+body {
+	text-align: center;
+	font-family: "Courier New", Geneva, sans-serif;
+}
+
+#container {
+	width: 480px;
+	margin: auto;
+}
+
+#right_panel {
+	float: right;
+}
+
+#main_panel {
+	background: gray;
+}
+
+.side_panel {
+	background: gray;
+	border-style: solid;
+	border-width: 2px;
+}
