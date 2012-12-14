@@ -65,7 +65,7 @@ function Board(_cells) {
 		}
 	};
 	
-	this.scored_prev = false;
+	this.rows_cleared_prev = 0;
 	
 	this.delete_rows = function() {
 		var cleared_rows = 0;
@@ -93,11 +93,11 @@ function Board(_cells) {
 			score += 4;
 		}
 		
-		if (cleared_rows > 0 && this.scored_prev) {
+		if (cleared_rows > 0 && this.rows_cleared_prev > 0) {
 			score++;
 		}
 		
-		this.scored_prev = (cleared_rows > 0);
+		this.rows_cleared_prev = cleared_rows;
 	};
 	
 	this.clear = function() {

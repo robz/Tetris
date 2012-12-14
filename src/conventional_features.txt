@@ -1,0 +1,100 @@
+var weights = 
+[[-1.0026654310666072,-0.6559017389101298,0.1512021014183981,0.6955328366505259,-0.03745176363340033,0.46213490303022337,0,0,0],[-1.2291238147699661,-1.3873636889515304,0.4287064176630322,1.0789677522117074,0.6301894333760184,0.24309187037510185,0,0,0],[-1.2029201470421258,-1.8372069186101592,0.2404891918293976,1.5056179252435886,0.43968928054125567,0.899363099649974,0,0,0],[-0.6983594469883232,-1.1477962298809026,0.12513845917263722,0.8703741056144092,0.1500372866948673,0.18088698912038223,0,0,0],[-0.9731216540538389,-1.6651932048383482,0.11236223838756428,1.3167857082072112,0.7966979256624362,0.3683960386931109,0,0,0],[-0.7893588585476901,-1.0025066096837143,0.11386415840699922,1.074054204434228,-0.10308570682560064,0.2577383175727329,0,0,0],[-0.6507477282884422,-1.0532754249325484,0.10999198953238701,0.8635798638811599,0.18411309841103296,0.22413769744481188,0,0,0]];
+
+var features = [
+	// height
+	function(old_board, piece, new_board) {
+		var row = piece.first_row[piece.orient] + piece.row;
+		return ROWS - row - new_board.rows_cleared_prev;
+	},
+	
+	// holes
+	function(old_board, piece, new_board) {
+		var count = 0;
+	
+		for (var c = 0; c < 4; c++) {
+			var col = c + piece.col;
+			
+			for (var r = 3; r >= 0; r--) {
+				if (piece.struct[piece.orient][r][c] > 0) {
+					for (var row = r + piece.row + 1; row < ROWS; row++) {
+						if (old_board.cells[row][col] == 0) {
+							count++;
+						} else {
+							break;
+						}
+					}
+					break;
+				}
+			}
+		}
+		
+		return count;
+	},
+	
+	// lines cleared
+	function(old_board, piece, new_board) {
+		return new_board.rows_cleared_prev;
+	},
+	
+	// contiguous blocks
+	function(old_board, piece, new_board) {
+		var count = 0;
+	
+		for (var r = 0; r < 4; r++) {
+			for (var c = 0; c < 4; c++) {
+				if (piece.struct[piece.orient][r][c] > 0) {
+					for (var i = 0; i < diffs.length; i++) {
+						var new_row = r + piece.row + diffs[i][0],
+							new_col = c + piece.col + diffs[i][1];
+							
+						if (new_row >= 0 && new_row < ROWS
+							&& new_col >= 0 && new_col < COLS
+							&& old_board.cells[new_row][new_col] > 0) {
+							count++;
+						}
+					}
+				}
+			}
+		}
+		
+		return count;
+	},
+	
+	// touching walls
+	function(old_board, piece, new_board) {
+		var count = 0;
+	
+		for (var r = 0; r < 4; r++) {
+			for (var c = 0; c < 4; c++) {
+				if (piece.struct[piece.orient][r][c] > 0) {
+					if (c + piece.col + 1 >= COLS) {
+						count++;
+					} 
+					if (c + piece.col - 1 < 0) {
+						count++;
+					}
+				}
+			}
+		}
+		
+		return count;
+	},
+	
+	// touching floor
+	function(old_board, piece, new_board) {
+		var count = 0;
+	
+		for (var r = 0; r < 4; r++) {
+			for (var c = 0; c < 4; c++) {
+				if (piece.struct[piece.orient][r][c] > 0) {
+					if (r + piece.row + 1 >= ROWS) {
+						count++;
+					}
+				}
+			}
+		}
+		
+		return count;
+	},
+];

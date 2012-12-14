@@ -3,7 +3,9 @@ var LEFT = 37, RIGHT = 39, UP = 38, DOWN = 40, SPACE = 32;
 
 var piece, board, main_panel, side_panels, score_label, lines_label;
 
-var gameover = true, botplaying = false, score = 0, lines = 0;
+var gameover = true, botplaying = false, score = 0, lines = 0, update_period = 1000;
+
+var ave_score = 0, ave_lines = 0, play_count = 0;
 
 window.onload = function() {
 	score_label = document.getElementById("score");
@@ -18,7 +20,11 @@ window.onload = function() {
 	board = new Board();	
 	nexts = new Array(NUM_SIDE_PANELS);
 	
-	setInterval(update, 0);
+	init_watcher();
+	
+	// botbtn();
+	
+	setTimeout(update, update_period);
 };
 
 function botbtn() {
@@ -41,6 +47,7 @@ function botbtn() {
 	lines = 0;
 	botplaying = true;
 	gameover = false;
+	update_period = 0;
 }
 
 function playbtn() {
@@ -63,6 +70,7 @@ function playbtn() {
 	lines = 0;
 	botplaying = false;
 	gameover = false;
+	update_period = 200;
 }
 
 function updateUI() {
@@ -76,8 +84,17 @@ function updateUI() {
 }
 
 function place_and_set_new() {
+	var old_board = board.clone();
 	board.fix(piece);
 	board.delete_rows();
+
+	/*
+	console.log(features[0](old_board, piece, board), 
+				features[1](old_board, piece, board), 
+				features[2](old_board, piece, board));
+	*/
+	
+	watch(old_board, piece, board);
 	
 	piece = nexts[0];
 	for (var i = 0; i < NUM_SIDE_PANELS-1; i++) {
@@ -91,7 +108,17 @@ function place_and_set_new() {
 }
 
 function update() {
-	if (gameover) {
+	if (gameover) {	
+		/*
+		ave_score = ((ave_score*play_count) + score)/(play_count+1);
+		ave_lines = ((ave_lines*play_count) + lines)/(play_count+1);
+		console.log("current: ", score, lines);
+		console.log("averages: ", ave_score, ave_lines);
+		play_count++;
+		botbtn();
+		*/
+		
+		setTimeout(update, update_period);
 		return;
 	}
 	
@@ -117,8 +144,10 @@ function update() {
 	}
 	
 	if (gameover) {
-		alert("gameover!");
+		//alert("gameover!");
 	}
+	
+	setTimeout(update, update_period);
 }
 
 function keypressed(event) {
