@@ -68,8 +68,6 @@ function watch(old_board, piece, new_board) {
 			+ move_weights[i])/(update_count + 1);
 	}
 	
-	console.log(JSON.stringify(piece_averages));
-	
 	update_count++;
 }
 

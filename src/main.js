@@ -3,7 +3,7 @@ var LEFT = 37, RIGHT = 39, UP = 38, DOWN = 40, SPACE = 32;
 
 var piece, board, main_panel, side_panels, score_label, lines_label;
 
-var gameover = true, botplaying = false, score = 0, lines = 0, update_period = 1000;
+var gameover = true, botplaying = false, score = 0, lines = 0, update_period = 200;
 
 var ave_score = 0, ave_lines = 0, play_count = 0;
 
@@ -22,10 +22,31 @@ window.onload = function() {
 	
 	init_watcher();
 	
-	// botbtn();
+	// botbtn(); 
 	
 	setTimeout(update, update_period);
+	setInterval(update_time, 900);
 };
+
+function update_time() {
+	if (gameover) {
+		return;
+	}
+
+	var d_time = new Date().getTime() - start_time;
+	
+	var seconds = Math.floor(d_time/1000)%60,
+		seconds_str = "" + seconds;
+	
+	if (seconds < 10) {
+		seconds_str = "0" + seconds;
+	}
+	
+	var minutes_str = "" + Math.floor(d_time/1000/60);
+
+	document.getElementById("minutes").innerHTML = minutes_str;
+	document.getElementById("seconds").innerHTML = seconds_str;
+}
 
 function botbtn() {
 	document.getElementById("botbtn").blur();
@@ -48,6 +69,7 @@ function botbtn() {
 	botplaying = true;
 	gameover = false;
 	update_period = 0;
+	start_time = new Date().getTime();
 }
 
 function playbtn() {
@@ -71,6 +93,7 @@ function playbtn() {
 	botplaying = false;
 	gameover = false;
 	update_period = 200;
+	start_time = new Date().getTime();
 }
 
 function updateUI() {

@@ -11,7 +11,7 @@ function Panel(id, num_rows, num_cols, pad, is_side_board) {
 		this.context.fillStyle = "gray";
 		this.context.fillRect(0, 0, this.width, this.height);
 		this.context.strokeStyle = "black";
-		//this.drawGrid();
+		this.drawGrid();
 	};
 
 	this.drawGrid = function() {
